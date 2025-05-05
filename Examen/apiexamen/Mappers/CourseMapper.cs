@@ -5,16 +5,16 @@ namespace apiexamen.Mappers
 {
   public static class CourseMapper
   {
-    public static CourseDto ToDto(this Course eventItem)
+    public static CourseDto ToDto(this Course courseItem)
     {
       return new CourseDto
       {
-        Id = eventItem.Id,
-        Name = eventItem.Name,
-        Location = eventItem.Location,
-        Description = eventItem.Description,
-        Date = eventItem.Date,
-        Image = eventItem.Image
+        id = courseItem.id,
+        name = courseItem.name,
+        description = courseItem.description,
+        schedule = courseItem.schedule,
+        imageUrl = courseItem.imageUrl,
+        professor = courseItem.professor,
       };
     }
 
@@ -22,10 +22,10 @@ namespace apiexamen.Mappers
     {
       return new Course
       {
-        Name = createUserRequest.Name,
-        Location = createUserRequest.Location,
-        Description = createUserRequest.Description,
-        Date = createUserRequest.Date
+        name = createUserRequest.name,
+        description = createUserRequest.description,
+        schedule = createUserRequest.schedule,
+        professor = createUserRequest.professor,
       };
     }
   }
