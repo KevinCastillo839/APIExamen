@@ -2,11 +2,13 @@ namespace apiexamen.Dtos.Course
 {
   public class CourseDto
   {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Location { get; set; }
-    public string Description { get; set; }
-    public DateTime Date { get; set; }
-    public string Image { get; set; }
+    public int id { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
+
+    public string schedule { get; set; }
+    public string? imageUrl { get; set; }
+
+    public string professor { get; set; }
   }
 }

@@ -8,10 +8,12 @@ namespace apiexamen.Dtos.Course
   public class CreateCourseRequestDto
   {
 
-    public string Name { get; set; }
-    public string Location { get; set; }
-    public string Description { get; set; }
-    public DateTime Date { get; set; }
+    public string name { get; set; }
+    public string description { get; set; }
+
+    public string schedule { get; set; }
+
+    public string professor { get; set; }
     public IFormFile? File { get; set; }
   }
 }
