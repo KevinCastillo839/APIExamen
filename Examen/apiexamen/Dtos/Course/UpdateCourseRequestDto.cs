@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace apiexamen.Dtos.Event
+namespace apiexamen.Dtos.Course
 {
   public class UpdateEventRequestDto
   {

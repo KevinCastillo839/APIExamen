@@ -1,4 +1,4 @@
-using apiexamen.Dtos.Event;
+using apiexamen.Dtos.Course;
 using apiexamen.Models;
 
 namespace apiexamen.Mappers

@@ -1,4 +1,4 @@
-namespace apiexamen.Dtos.Event
+namespace apiexamen.Dtos.Course
 {
   public class CourseDto
   {
