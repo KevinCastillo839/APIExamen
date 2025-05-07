@@ -66,26 +66,57 @@ namespace api.Controllers
       return CreatedAtAction(nameof(getById), new { id = courseModel.id }, courseModel.ToDto());
     }
 
-    [HttpPut]
-    [Route("{id}")]
-    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCourseRequestDto courseDto)
+
+
+   [HttpPut]
+[Route("{id}")]
+public async Task<IActionResult> Update([FromRoute] int id, [FromForm] UpdateCourseRequestDto courseDto)
+{
+    var courseModel = await _context.Courses.FirstOrDefaultAsync(_course => _course.id == id);
+    if (courseModel == null)
     {
-      var courseModel = await _context.Courses.FirstOrDefaultAsync(_course => _course.id == id);
-      if (courseModel == null)
-      {
         return NotFound();
-      }
-      courseModel.name = courseDto.name;
-      courseModel.description = courseDto.description;
-      courseModel.schedule = courseDto.schedule;
-      courseModel.professor = courseDto.professor;
-
-      await _context.SaveChangesAsync();
-            // Send notification to all users subscribed to "event_notifications" topic
-  
-
-      return Ok(courseModel.ToDto());
     }
+
+    // Actualizar la información del curso
+    courseModel.name = courseDto.name;
+    courseModel.description = courseDto.description;
+    courseModel.schedule = courseDto.schedule;
+    courseModel.professor = courseDto.professor;
+
+    // Verificar si se ha subido una nueva imagen
+    if (courseDto.File != null && courseDto.File.Length > 0)
+    {
+        // Eliminar la imagen anterior si existe
+        if (!string.IsNullOrEmpty(courseModel.imageUrl))
+        {
+            var oldFilePath = Path.Combine(_imagePath, courseModel.imageUrl);
+            if (System.IO.File.Exists(oldFilePath))
+            {
+                System.IO.File.Delete(oldFilePath);
+            }
+        }
+
+        // Guardar la nueva imagen
+        var fileName = courseModel.id.ToString() + Path.GetExtension(courseDto.File.FileName);
+        var filePath = Path.Combine(_imagePath, fileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await courseDto.File.CopyToAsync(stream);
+        }
+
+        // Actualizar la URL de la imagen en la base de datos
+        courseModel.imageUrl = fileName;
+    }
+
+    // Guardar los cambios
+    await _context.SaveChangesAsync();
+
+    return Ok(courseModel.ToDto());
+}
+
+
 
     [HttpDelete]
     [Route("{id}")]
