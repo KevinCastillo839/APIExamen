@@ -13,12 +13,12 @@ namespace apiexamen.Mappers
                 id = studentItem.id,
                 name = studentItem.name,
                 email = studentItem.email,  // Aquí mapeamos email correctamente
-                phone = studentItem.phone,     // Aquí mapeamos phone correctamente
+               // phone = studentItem.phone,     // Aquí mapeamos phone correctamente
             };
         }
 
         // Método para mapear el CreateStudentRequestDto a Student
-        public static Student ToCourseFromCreateDto(this CreateStudentRequestDto createStudentRequest)
+        public static Student ToStudentFromCreateDto(this CreateStudentRequestDto createStudentRequest)
         {
             return new Student
             {
@@ -26,6 +26,13 @@ namespace apiexamen.Mappers
                 email = createStudentRequest.email, // Mapear description a email
                 phone = createStudentRequest.phone,    // Mapear schedule a phone
             };
-        }
-    }
-}
+         }
+        public static void MapUpdate(this Student student, UpdateStudentRequestDto dto)
+        {
+            student.name = dto.name;
+            student.email = dto.email;
+            student.phone = dto.phone;
+            }
+                }
+            }
+
