@@ -12,5 +12,6 @@ namespace apiexamen.Data
     public ApplicationDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
 
     public DbSet<Course> Courses { get; set; }
+    public DbSet<Student> Students { get; set; }
   }
 }
