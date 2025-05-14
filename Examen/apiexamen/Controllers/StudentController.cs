@@ -80,6 +80,7 @@ namespace apiexamen.Controllers
       student.name = studentDto.name;
       student.email = studentDto.email;
       student.phone = studentDto.phone;
+      student.courseId = studentDto.courseId;
 
       await _context.SaveChangesAsync();
 

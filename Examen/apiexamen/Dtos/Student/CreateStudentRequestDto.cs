@@ -13,5 +13,7 @@ namespace apiexamen.Dtos.Student
     public string email { get; set; } = string.Empty;
     public string phone { get; set; } = string.Empty;
 
+    public int courseId {get; set;}
+
   }
 }

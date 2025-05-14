@@ -13,7 +13,8 @@ namespace apiexamen.Mappers
                 id = studentItem.id,
                 name = studentItem.name,
                 email = studentItem.email,  // Aquí mapeamos email correctamente
-               // phone = studentItem.phone,     // Aquí mapeamos phone correctamente
+                phone = studentItem.phone,     // Aquí mapeamos phone correctamente
+                courseId = studentItem.courseId,
             };
         }
 
@@ -25,6 +26,7 @@ namespace apiexamen.Mappers
                 name = createStudentRequest.name,
                 email = createStudentRequest.email, // Mapear description a email
                 phone = createStudentRequest.phone,    // Mapear schedule a phone
+                courseId = createStudentRequest.courseId,
             };
          }
         public static void MapUpdate(this Student student, UpdateStudentRequestDto dto)
@@ -32,6 +34,7 @@ namespace apiexamen.Mappers
             student.name = dto.name;
             student.email = dto.email;
             student.phone = dto.phone;
+            student.courseId = dto.courseId;
             }
                 }
             }
