@@ -13,7 +13,7 @@ namespace apiexamen.Mappers
                 id = studentItem.id,
                 name = studentItem.name,
                 email = studentItem.email,  // Aquí mapeamos email correctamente
-               // phone = studentItem.phone,     // Aquí mapeamos phone correctamente
+                phone = studentItem.phone,     // Aquí mapeamos phone correctamente
             };
         }
 
