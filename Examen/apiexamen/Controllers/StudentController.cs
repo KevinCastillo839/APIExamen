@@ -61,8 +61,8 @@ public async Task<IActionResult> Create(int courseId, [FromBody] CreateStudentRe
     {
         await FirebaseHelper.SendPushNotificationToTopicAsync(
             topic: "student_notifications",
-            title: "New Student Enrolled",
-            body: $"El estudiante {studentName}, se ha inscirto al curso:{courseName}"
+            title: "Nuevo estudiante inscrito",
+            body: $"El estudiante {studentName}, se ha inscrito al curso:{courseName}"
         );
     }
     catch (Exception)
