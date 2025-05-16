@@ -26,8 +26,10 @@ Este proyecto es una API REST desarrollada en .NET para gestionar cursos y estud
    - Cambiar el valor de `DefaultConnection` colocando tu **usuario**, **contraseña**.
 
 3. **Aplicar migraciones a la base de datos**:
-   Desde la terminal o la Consola del Administrador de Paquetes en Visual Studio:
-   ```bash
+   Desde la terminal:
+   ```
+   dotnet restore
+   dotnet build
    dotnet ef database update
    ```
 
