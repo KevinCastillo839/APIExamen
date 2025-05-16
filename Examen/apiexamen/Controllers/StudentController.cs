@@ -18,7 +18,7 @@ namespace apiexamen.Controllers
       _context = context;
     }
 
-    // GET: api/course/{courseId}/students
+// GET: api/course/{courseId}/students
     [HttpGet]
     public async Task<IActionResult> GetAll(int courseId)
     {

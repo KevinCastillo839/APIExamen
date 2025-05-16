@@ -12,8 +12,8 @@ namespace apiexamen.Dtos.Course
 
     public string schedule { get; set; }
 
-    public string professor { get; set; }   // Cambiar 'imageUrl' a un archivo, no una cadena
-        public IFormFile? File { get; set; } // Recibimos el archivo
+    public string professor { get; set; }   // Change 'imageUrl' to a file, not a string.
+        public IFormFile? File { get; set; } // We receive the file.
 
   }
 }

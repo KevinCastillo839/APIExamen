@@ -78,16 +78,16 @@ public async Task<IActionResult> Update([FromRoute] int id, [FromForm] UpdateCou
         return NotFound();
     }
 
-    // Actualizar la información del curso
+// Update the course information
     courseModel.name = courseDto.name;
     courseModel.description = courseDto.description;
     courseModel.schedule = courseDto.schedule;
     courseModel.professor = courseDto.professor;
 
-    // Verificar si se ha subido una nueva imagen
+// Check if a new image has been uploaded
     if (courseDto.File != null && courseDto.File.Length > 0)
     {
-        // Eliminar la imagen anterior si existe
+// Delete the previous image if it exists
         if (!string.IsNullOrEmpty(courseModel.imageUrl))
         {
             var oldFilePath = Path.Combine(_imagePath, courseModel.imageUrl);
@@ -97,7 +97,7 @@ public async Task<IActionResult> Update([FromRoute] int id, [FromForm] UpdateCou
             }
         }
 
-        // Guardar la nueva imagen
+// Save the new image
         var fileName = courseModel.id.ToString() + Path.GetExtension(courseDto.File.FileName);
         var filePath = Path.Combine(_imagePath, fileName);
 
@@ -106,11 +106,11 @@ public async Task<IActionResult> Update([FromRoute] int id, [FromForm] UpdateCou
             await courseDto.File.CopyToAsync(stream);
         }
 
-        // Actualizar la URL de la imagen en la base de datos
+// Update the image URL in the database
         courseModel.imageUrl = fileName;
     }
 
-    // Guardar los cambios
+// Save the changes
     await _context.SaveChangesAsync();
 
     return Ok(courseModel.ToDto());
