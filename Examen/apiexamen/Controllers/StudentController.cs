@@ -19,6 +19,7 @@ namespace apiexamen.Controllers
     }
 
     // GET: api/course/{courseId}/students
+    // Retrieves all students enrolled in a specific course
     [HttpGet]
     public async Task<IActionResult> GetAll(int courseId)
     {
@@ -32,6 +33,7 @@ namespace apiexamen.Controllers
     }
 
     // POST: api/course/{courseId}/students
+    // Creates a new student and associates them with a specific course
     [HttpPost]
     public async Task<IActionResult> Create(int courseId, [FromBody] CreateStudentRequestDto studentDto)
     {
@@ -47,10 +49,21 @@ namespace apiexamen.Controllers
       await _context.Students.AddAsync(student);
       await _context.SaveChangesAsync();
 
+      // Send a push notification with the student and course names
+      var studentName = $"{student.name}";
+      var courseName = course.name;
+
+      await FirebaseHelper.SendPushNotificationToTopicAsync(
+          topic: "student_notifications",
+          title: "New Student Enrolled",
+          body: $"Student {studentName} has enrolled in the course {courseName}"
+      );
+
       return CreatedAtAction(nameof(GetById), new { courseId = courseId, id = student.id }, student.ToDto());
     }
 
     // GET: api/course/{courseId}/students/{id}
+    // Retrieves a student by ID within a specific course
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int courseId, int id)
     {
@@ -66,6 +79,7 @@ namespace apiexamen.Controllers
     }
 
     // PUT: api/course/{courseId}/students/{id}
+    // Updates a student's information
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int courseId, int id, [FromBody] UpdateStudentRequestDto studentDto)
     {
@@ -80,6 +94,7 @@ namespace apiexamen.Controllers
       student.name = studentDto.name;
       student.email = studentDto.email;
       student.phone = studentDto.phone;
+      student.courseId = studentDto.courseId;
 
       await _context.SaveChangesAsync();
 
@@ -87,6 +102,7 @@ namespace apiexamen.Controllers
     }
 
     // DELETE: api/course/{courseId}/students/{id}
+    // Deletes a student by ID from a specific course
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int courseId, int id)
     {
