@@ -31,24 +31,35 @@ namespace apiexamen.Controllers
       return Ok(studentDtos);
     }
 
-    // POST: api/course/{courseId}/students
-    [HttpPost]
-    public async Task<IActionResult> Create(int courseId, [FromBody] CreateStudentRequestDto studentDto)
+ // POST: api/course/{courseId}/students
+[HttpPost]
+public async Task<IActionResult> Create(int courseId, [FromBody] CreateStudentRequestDto studentDto)
+{
+    var course = await _context.Courses.FindAsync(courseId);
+    if (course == null)
     {
-      var course = await _context.Courses.FindAsync(courseId);
-      if (course == null)
-      {
         return NotFound("Course not found");
-      }
-
-      var student = studentDto.ToStudentFromCreateDto();
-      student.courseId = courseId;
-
-      await _context.Students.AddAsync(student);
-      await _context.SaveChangesAsync();
-
-      return CreatedAtAction(nameof(GetById), new { courseId = courseId, id = student.id }, student.ToDto());
     }
+
+    var student = studentDto.ToStudentFromCreateDto();
+    student.courseId = courseId;
+
+    await _context.Students.AddAsync(student);
+    await _context.SaveChangesAsync();
+
+    // Enviar notificación con nombre del estudiante y nombre del curso
+    var studentName = $"{student.name}";
+    var courseName = course.name;
+
+    await FirebaseHelper.SendPushNotificationToTopicAsync(
+        topic: "student_notifications",
+        title: "Nuevo estudiante inscrito",
+        body: $"Estudiante {studentName}, se ha inscrito al curso {courseName}"
+    );
+
+    return CreatedAtAction(nameof(GetById), new { courseId = courseId, id = student.id }, student.ToDto());
+}
+
 
     // GET: api/course/{courseId}/students/{id}
     [HttpGet("{id}")]
