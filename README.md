@@ -32,8 +32,9 @@ Este proyecto es una API REST desarrollada en .NET para gestionar cursos y estud
    dotnet build
    dotnet ef database update
    ```
-
-4. **Compilar y ejecutar**:
+4. descomprimir el archivo firebase-adminsdk.rar y colocar el archivo firebase-adminsdk.json en la raiz del proyecto (carpeta apiexamen)
+   
+6. **Compilar y ejecutar**:
    Nos situamos en la carpeta apiexamen usando el comando cd
    - Compilar el proyecto:
      ```terminal de Visual Studio
