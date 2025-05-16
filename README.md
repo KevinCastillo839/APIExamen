@@ -44,8 +44,9 @@ Este proyecto es una API REST desarrollada en .NET para gestionar cursos y estud
      dotnet watch run
      ```
 
-
-
-
 ## Rama Principal
 - `main`
+
+NOTA
+al intentar subir el archivo firebase-adminsdk.json firebase lo detecta y la clave generada deja de funcionar por lo que no funciona la notificacion, si se genera una nueva clave y la pongo en el proyecto funciona correctamente pero a la hora de subirla deja de funcionar
+
