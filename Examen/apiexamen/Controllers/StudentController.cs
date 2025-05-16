@@ -34,33 +34,47 @@ namespace apiexamen.Controllers
 
     // POST: api/course/{courseId}/students
     // Creates a new student and associates them with a specific course
-    [HttpPost]
-    public async Task<IActionResult> Create(int courseId, [FromBody] CreateStudentRequestDto studentDto)
+[HttpPost]
+public async Task<IActionResult> Create(int courseId, [FromBody] CreateStudentRequestDto studentDto)
+{
+    // Look for the course by ID
+    var course = await _context.Courses.FindAsync(courseId);
+    if (course == null)
     {
-      var course = await _context.Courses.FindAsync(courseId);
-      if (course == null)
-      {
         return NotFound("Course not found");
-      }
-
-      var student = studentDto.ToStudentFromCreateDto();
-      student.courseId = courseId;
-
-      await _context.Students.AddAsync(student);
-      await _context.SaveChangesAsync();
-
-      // Send a push notification with the student and course names
-      var studentName = $"{student.name}";
-      var courseName = course.name;
-
-      await FirebaseHelper.SendPushNotificationToTopicAsync(
-          topic: "student_notifications",
-          title: "New Student Enrolled",
-          body: $"Student {studentName} has enrolled in the course {courseName}"
-      );
-
-      return CreatedAtAction(nameof(GetById), new { courseId = courseId, id = student.id }, student.ToDto());
     }
+
+    // Convert DTO to Student entity and assign course ID
+    var student = studentDto.ToStudentFromCreateDto();
+    student.courseId = courseId;
+
+    // Save the student in the database
+    await _context.Students.AddAsync(student);
+    await _context.SaveChangesAsync();
+
+    // Prepare names for notification
+    var studentName = student.name;
+    var courseName = course.name;
+
+    // Try to send a push notification, but do not interrupt the response if it fails
+    try
+    {
+        await FirebaseHelper.SendPushNotificationToTopicAsync(
+            topic: "student_notifications",
+            title: "New Student Enrolled",
+            body: $"El estudiante {studentName}, se ha inscirto al curso:{courseName}"
+        );
+    }
+    catch (Exception)
+    {
+        // Ignore any error when sending the notification
+        // Student is already created, so we don't return an error
+    }
+
+    // Return a Created response with the new student's data
+    return CreatedAtAction(nameof(GetById), new { courseId = courseId, id = student.id }, student.ToDto());
+}
+
 
     // GET: api/course/{courseId}/students/{id}
     // Retrieves a student by ID within a specific course
