@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("apiexamen")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2272453969b753b74feb96719444674232caf2c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+34e5446e020de615b51cb829c9266842938e836c")]
 [assembly: System.Reflection.AssemblyProductAttribute("apiexamen")]
 [assembly: System.Reflection.AssemblyTitleAttribute("apiexamen")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
